@@ -58,6 +58,11 @@
                         $projectsFolderEmpty = 1;
 
                     }
+                    else {
+
+                        $projectsFolderEmpty = 0;
+
+                    }
 
                     // Sorts files
                     sort($dirArray);
@@ -110,6 +115,16 @@
             </tbody>
         </table>
         <h2 class="ui center aligned header"><?php echo("<a href='$ahref'>$atext hidden files</a>"); ?></h2>
+    </div>
+    <div class="container ui segment">
+        <h2 class="ui center aligned header">Virtual Hosts</h2>
+        <table class="ui celled table">
+            <tbody>
+                <tr>
+                    <td><a href="example.local">Example Virtual Host</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="ui divider"></div>
     <div class="container ui segment">
