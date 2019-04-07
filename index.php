@@ -16,16 +16,6 @@
 
                 <?php
 
-                    // Adds pretty filesizes
-                    function pretty_filesize($file) {
-                        $size=filesize($file);
-                        if($size<1024){$size=$size." Bytes";}
-                        elseif(($size<1048576)&&($size>1023)){$size=round($size/1024, 1)." KB";}
-                        elseif(($size<1073741824)&&($size>1048575)){$size=round($size/1048576, 1)." MB";}
-                        else{$size=round($size/1073741824, 1)." GB";}
-                        return $size;
-                    }
-
                     // Checks to see if veiwing hidden files is enabled
                     if($_SERVER['QUERY_STRING']=="hidden") {
                         $hide="";
@@ -39,18 +29,18 @@
                     }
 
                     // Opens directory
-                    $myDirectory=opendir("./projects");
+                    $projectsDirectory=opendir("./projects");
                     
                     // Gets each entry
-                    while($entryName=readdir($myDirectory)) {
-                        $dirArray[]=$entryName;
+                    while($entryName=readdir($projectsDirectory)) {
+                        $projectsDirectoryArray[]=$entryName;
                     }
 
                     // Closes directory
-                    closedir($myDirectory);
+                    closedir($projectsDirectory);
                     
                     // Counts elements in array
-                    $indexCount=count($dirArray);
+                    $indexCount=count($projectsDirectoryArray);
 
                     //Check if there are no projects in the projects folder
                     if ($indexCount == 2) {
@@ -65,17 +55,17 @@
                     }
 
                     // Sorts files
-                    sort($dirArray);
+                    sort($projectsDirectoryArray);
 
                     // Loops through the array of files
                     for($index=0; $index < $indexCount; $index++) {
 
                         // Decides if hidden files should be displayed, based on query above.
-                        if(substr("$dirArray[$index]", 0, 1)!=$hide) {
+                        if(substr("$projectsDirectoryArray[$index]", 0, 1)!=$hide) {
                             
                             // Gets File Names
-                            $name=$dirArray[$index];
-                            $namehref=$dirArray[$index];
+                            $name=$projectsDirectoryArray[$index];
+                            $namehref=$projectsDirectoryArray[$index];
 
                             // Output
                             echo ("
@@ -86,7 +76,7 @@
                         }
                     }
 
-                        // Output some additional folders when the show hidden files options is enabled
+                    // Output some additional folders when the show hidden files options is enabled
                     if ($hide == "") {
 
                         // Output
@@ -121,7 +111,7 @@
         <table class="ui celled table">
             <tbody>
                 <tr>
-                    <td><a href="example.local">Example Virtual Host</a></td>
+                    <td><a href="http://mylittleproject.local">MyLittleProject</a></td>
                 </tr>
             </tbody>
         </table>
@@ -137,6 +127,79 @@
                 <tr>
                     <td><a href="./phpinfo.php">phpInfo</a></td>
                 </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="ui divider"></div>
+    <div class="container ui segment">
+        <h2 class="ui center aligned header">Open Source</h2>
+        <table class="ui celled table">
+            <tbody>
+                
+                <?php
+
+                    // Opens directory
+                    $openSourceDirectory=opendir("./opensource");
+                    
+                    // Gets each entry
+                    while($entryName=readdir($openSourceDirectory)) {
+                        $openSourceDirectoryArray[]=$entryName;
+                    }
+
+                    // Closes directory
+                    closedir($openSourceDirectory);
+                    
+                    // Counts elements in array
+                    $indexCount=count($openSourceDirectoryArray);
+
+                    //Check if there are no projects in the opensource folder
+                    if ($indexCount == 2) {
+
+                        $openSourceFolderEmpty = 1;
+
+                    }
+                    else {
+
+                        $openSourceFolderEmpty = 0;
+
+                    }
+
+                    // Sorts files
+                    sort($openSourceDirectoryArray);
+
+                    // Loops through the array of files
+                    for($index=0; $index < $indexCount; $index++) {
+
+                        // Decides if hidden files should be displayed, based on query above.
+                        if(substr("$openSourceDirectoryArray[$index]", 0, 1)!=$hide) {
+                            
+                            // Gets File Names
+                            $name=$openSourceDirectoryArray[$index];
+                            $namehref=$openSourceDirectoryArray[$index];
+
+                            // Output
+                            echo ("
+                            <tr>
+                                <td><a href='./opensource/$namehref'>$name</a></td>
+                            </tr>
+                            ");
+                        }
+                    }
+
+                    // Output if the projects folder is empty
+                    if ($openSourceFolderEmpty) {
+                        
+                        // Output
+                        echo ("
+                        <tr>
+                            <td>There are no projects installed in the opensource folder.</td>
+                        </tr>
+                        ");
+
+                    }
+
+                ?>
+
             </tbody>
         </table>
     </div>
